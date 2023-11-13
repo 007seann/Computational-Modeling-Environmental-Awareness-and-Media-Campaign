@@ -1,0 +1,33 @@
+"BehaviorSpace results (NetLogo 6.3.0)"
+"Env_Aw_English.nlogo"
+"experiment-High"
+"11/13/2023 20:12:08:449 +0000"
+"min-pxcor","max-pxcor","min-pycor","max-pycor"
+"-20","20","-20","20"
+"[run number]"
+"sociability_range_type",
+"recyc_perc_g3",
+"sociability_max",
+"humanos_grupo1",
+"humanos_grupo2",
+"learning_rate",
+"humanos_grupo3",
+"show_eco_level?",
+"desplazamiento_max",
+"selected_campaign",
+"desv_est_res",
+"media_res",
+"media_campaign_strength",
+"recyc_perc_g1",
+"change_sociability_behavior?",
+"recyc_perc_g2",
+"campaign_size",
+"media_campaign_frequency",
+"[reporter]"
+"[final]",
+"[min]",
+"[max]",
+"[mean]",
+"[steps]",
+
+"[all run data]"
