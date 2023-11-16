@@ -966,7 +966,6 @@ Finally, we have values related to the social aspect. The sociability radius, wh
 Concerning the sub-models, these have been detailed throughout this work. Considering that the model and all sub-models were designed in the absence of research associated the factors present in this work, there are no reference values for most of the model parameters; however, the ranges defined for the state variables are available in Table 1.
 
 
-
 @#$#@#$#@
 default
 true
