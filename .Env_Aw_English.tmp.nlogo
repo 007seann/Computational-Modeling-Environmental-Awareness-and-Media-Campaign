@@ -32,13 +32,13 @@ humans-own [ eco_level r_vol sociability_range persuasion_level change_resistanc
 
 globals [
   nearby         ;; It is related to the sociability of each human (range - ability to interact with a greater or lesser number of close neighbors)
-  mrec_nrec_ac   ;; quantification of the amount of non-recycled recyclable material (monitor)
-  mrec_rec_ac    ;; quantification of the amount of recycled recyclable material (monitor)
-  mat_no_recyc   ;; quantification of the amount of non-recyclable material
-  nef_perc       ;; # of people in the first rank (monitor)
-  efprom_perc    ;; # of people in the second rank (monitor)
-  ef_perc        ;; # of people in the third rank (monitor)
-  eco_level_pop  ;; average level of environmental awareness of the population. (monitor)
+  mrec_nrec_ac   ;; quantification of the amount of non-recycled recyclable material (monitor) - mrec_nrec_ac: monitor recycled not recycled accurately counted
+  mrec_rec_ac    ;; quantification of the amount of recycled recyclable material (monitor) - mrec_rec_ac: monitor recycled recycled accuractely counted
+  mat_no_recyc   ;; quantification of the amount of non-recyclable material - mat_no_recyc: material not recyclable
+  nef_perc       ;; # of people in the first rank (monitor) - nef_prec: not eco-friendly percentage (low group)
+  efprom_perc    ;; # of people in the second rank (monitor) - efprom_perc: eco-friendely promedio(average) percentage (medium group)
+  ef_perc        ;; # of people in the third rank (monitor) - ef_prec: eco-friendly percentage (high group)
+  eco_level_pop  ;; average level of environmental awareness of the population. (monitor) - eco_level_pop: ecological level of the population
 ]
 
 
@@ -244,7 +244,7 @@ to generate-population
     set change_resistance_level random-float 1
   ]
   ask humans [
-    set size 1.2  ;; modify size
+    set size 0.12  ;; modify size
     setxy random-pxcor random-pycor
     ifelse (show_eco_level?)
     [set label (eco_level) ]
@@ -262,7 +262,7 @@ to generate-population
     set change_resistance_level random-float 1
   ]
   ask humans [
-    set size 10  ;; modify size
+    set size 1  ;; modify size
     setxy random-pxcor random-pycor
     ifelse (show_eco_level?)
     [set label (eco_level) ]
@@ -280,7 +280,7 @@ to generate-population
     set change_resistance_level random-float 1
   ]
   ask humans [
-    set size 1.5  ;; modify size
+    set size 0.15  ;; modify size
     setxy random-pxcor random-pycor
     actualizar_color eco_level
     ifelse (show_eco_level?)
@@ -303,9 +303,9 @@ to-report moore-offsets [ n ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-621
+620
 15
-1213
+1212
 608
 -1
 -1
@@ -337,7 +337,7 @@ SLIDER
 humanos_grupo1
 humanos_grupo1
 1
-100
+10000
 75.0
 1
 1
@@ -352,7 +352,7 @@ SLIDER
 humanos_grupo2
 humanos_grupo2
 1
-100
+10000
 20.0
 1
 1
@@ -367,7 +367,7 @@ SLIDER
 humanos_grupo3
 humanos_grupo3
 1
-100
+10000
 5.0
 1
 1
@@ -381,10 +381,10 @@ SLIDER
 315
 desplazamiento_max
 desplazamiento_max
+0.1
 1
-20
-4.0
-1
+0.4
+0.1
 1
 NIL
 HORIZONTAL
@@ -483,10 +483,10 @@ SLIDER
 483
 sociability_max
 sociability_max
+0.1
 1
-10
-4.0
-1
+0.4
+0.1
 1
 NIL
 HORIZONTAL
@@ -828,7 +828,7 @@ media_campaign_strength
 media_campaign_strength
 0
 1
-0.05
+0.15
 0.05
 1
 NIL
@@ -842,7 +842,7 @@ CHOOSER
 selected_campaign
 selected_campaign
 "High" "Medium" "Low" "All" "None"
-2
+4
 
 TEXTBOX
 54
@@ -964,7 +964,6 @@ In addition, the maximum displacement allowed for all humans can be defined per 
 
 Finally, we have values related to the social aspect. The sociability radius, which could be characteristic of everyone from beginning to end or be dynamic in the simulation, in this case, has been set as a characteristic of everyone. For its part, the Moore/Von Neumann type of neighbourhood can also be static or modified during the simulation. To initialize and execute the model, there are interface controls for the following variables: waste generated (mean and standard deviation), sociability radius, NPLe, rwNPLe, NPMe, rwNPMe, NPHe, rwNPHe, learning rate, maximum offset, and type of neighbourhood.
 Concerning the sub-models, these have been detailed throughout this work. Considering that the model and all sub-models were designed in the absence of research associated the factors present in this work, there are no reference values for most of the model parameters; however, the ranges defined for the state variables are available in Table 1.
-
 
 @#$#@#$#@
 default
@@ -1416,100 +1415,46 @@ NetLogo 6.3.0
       <value value="30"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="experiment-campaign-none" repetitions="3" runMetricsEveryStep="true">
+  <experiment name="experiment-main-High_by_sean" repetitions="10" runMetricsEveryStep="true">
     <setup>Setup</setup>
     <go>Begin</go>
-    <timeLimit steps="1825"/>
+    <timeLimit steps="1250"/>
     <metric>eco_level_pop</metric>
-    <enumeratedValueSet variable="sociability_range_type">
-      <value value="&quot;Von Neumann&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="recyc_perc_g3">
-      <value value="50"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="sociability_max">
-      <value value="4"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="humanos_grupo1">
-      <value value="75"/>
+      <value value="750"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="humanos_grupo2">
-      <value value="20"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="learning_rate">
-      <value value="3"/>
+      <value value="200"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="humanos_grupo3">
-      <value value="5"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="show_eco_level?">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="desplazamiento_max">
-      <value value="4"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="selected_campaign">
-      <value value="&quot;None&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="media_res">
-      <value value="0.95"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="desv_est_res">
-      <value value="0.3"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="media_campaign_strength">
-      <value value="0.05"/>
+      <value value="50"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="recyc_perc_g1">
       <value value="20"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="change_sociability_behavior?">
-      <value value="false"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="recyc_perc_g2">
       <value value="30"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="media_campaign_frequency">
-      <value value="31"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="campaign_size">
-      <value value="20"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="experiment-campaign-low" repetitions="3" runMetricsEveryStep="true">
-    <setup>Setup</setup>
-    <go>Begin</go>
-    <timeLimit steps="1825"/>
-    <metric>eco_level_pop</metric>
-    <enumeratedValueSet variable="sociability_range_type">
-      <value value="&quot;Von Neumann&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="recyc_perc_g3">
       <value value="50"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="sociability_max">
-      <value value="4"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo1">
-      <value value="75"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo2">
-      <value value="20"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="learning_rate">
       <value value="3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo3">
-      <value value="5"/>
+    <enumeratedValueSet variable="sociability_range_type">
+      <value value="&quot;Von Neumann&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sociability_max">
+      <value value="0.4"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="show_eco_level?">
       <value value="true"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="desplazamiento_max">
-      <value value="4"/>
+      <value value="0.4"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="selected_campaign">
-      <value value="&quot;Low&quot;"/>
+    <enumeratedValueSet variable="change_sociability_behavior?">
+      <value value="false"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="media_res">
       <value value="0.95"/>
@@ -1517,238 +1462,227 @@ NetLogo 6.3.0
     <enumeratedValueSet variable="desv_est_res">
       <value value="0.3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="media_campaign_strength">
-      <value value="0.05"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="recyc_perc_g1">
-      <value value="20"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="change_sociability_behavior?">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="recyc_perc_g2">
-      <value value="30"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="media_campaign_frequency">
       <value value="31"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="campaign_size">
-      <value value="15"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="experiment-campaign-medium" repetitions="3" runMetricsEveryStep="true">
-    <setup>Setup</setup>
-    <go>Begin</go>
-    <timeLimit steps="365"/>
-    <metric>eco_level_pop</metric>
-    <enumeratedValueSet variable="sociability_range_type">
-      <value value="&quot;Von Neumann&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="recyc_perc_g3">
-      <value value="50"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="sociability_max">
-      <value value="4"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo1">
-      <value value="75"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo2">
-      <value value="20"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="learning_rate">
-      <value value="3"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo3">
-      <value value="5"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="show_eco_level?">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="desplazamiento_max">
-      <value value="4"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="selected_campaign">
-      <value value="&quot;Medium&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="media_res">
-      <value value="0.95"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="desv_est_res">
-      <value value="0.3"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="media_campaign_strength">
       <value value="0.15"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="recyc_perc_g1">
-      <value value="20"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="change_sociability_behavior?">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="recyc_perc_g2">
-      <value value="30"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="media_campaign_frequency">
-      <value value="31"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="campaign_size">
-      <value value="4"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="experiment-campaign-high" repetitions="3" runMetricsEveryStep="true">
-    <setup>Setup</setup>
-    <go>Begin</go>
-    <timeLimit steps="365"/>
-    <metric>eco_level_pop</metric>
-    <enumeratedValueSet variable="sociability_range_type">
-      <value value="&quot;Von Neumann&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="recyc_perc_g3">
-      <value value="50"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="sociability_max">
-      <value value="4"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo1">
-      <value value="75"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo2">
-      <value value="20"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="learning_rate">
-      <value value="3"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo3">
-      <value value="5"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="show_eco_level?">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="desplazamiento_max">
-      <value value="4"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="selected_campaign">
       <value value="&quot;High&quot;"/>
     </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment-main-Medium_by_sean" repetitions="10" runMetricsEveryStep="true">
+    <setup>Setup</setup>
+    <go>Begin</go>
+    <timeLimit steps="1250"/>
+    <metric>eco_level_pop</metric>
+    <enumeratedValueSet variable="humanos_grupo1">
+      <value value="750"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="humanos_grupo2">
+      <value value="200"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="humanos_grupo3">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="recyc_perc_g1">
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="recyc_perc_g2">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="recyc_perc_g3">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="learning_rate">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sociability_range_type">
+      <value value="&quot;Von Neumann&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sociability_max">
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="show_eco_level?">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="desplazamiento_max">
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="change_sociability_behavior?">
+      <value value="false"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="media_res">
       <value value="0.95"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="desv_est_res">
       <value value="0.3"/>
     </enumeratedValueSet>
+    <enumeratedValueSet variable="media_campaign_frequency">
+      <value value="31"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="media_campaign_strength">
       <value value="0.15"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="selected_campaign">
+      <value value="&quot;Medium&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment-main-Low_by_sean" repetitions="10" runMetricsEveryStep="true">
+    <setup>Setup</setup>
+    <go>Begin</go>
+    <timeLimit steps="1250"/>
+    <metric>eco_level_pop</metric>
+    <enumeratedValueSet variable="humanos_grupo1">
+      <value value="750"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="humanos_grupo2">
+      <value value="200"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="humanos_grupo3">
+      <value value="50"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="recyc_perc_g1">
       <value value="20"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="change_sociability_behavior?">
-      <value value="false"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="recyc_perc_g2">
       <value value="30"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="media_campaign_frequency">
-      <value value="31"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="campaign_size">
-      <value value="1"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="experiment-campaign-all" repetitions="3" runMetricsEveryStep="true">
-    <setup>Setup</setup>
-    <go>Begin</go>
-    <timeLimit steps="365"/>
-    <metric>eco_level_pop</metric>
-    <enumeratedValueSet variable="sociability_range_type">
-      <value value="&quot;Von Neumann&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="recyc_perc_g3">
       <value value="50"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="sociability_max">
-      <value value="4"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo1">
-      <value value="75"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo2">
-      <value value="20"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="learning_rate">
       <value value="3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo3">
-      <value value="5"/>
+    <enumeratedValueSet variable="sociability_range_type">
+      <value value="&quot;Von Neumann&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sociability_max">
+      <value value="0.4"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="show_eco_level?">
       <value value="true"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="desplazamiento_max">
-      <value value="4"/>
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="change_sociability_behavior?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="media_res">
+      <value value="0.95"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="desv_est_res">
+      <value value="0.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="media_campaign_frequency">
+      <value value="31"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="media_campaign_strength">
+      <value value="0.15"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="selected_campaign">
+      <value value="&quot;Low&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment-main-All_by_sean" repetitions="10" runMetricsEveryStep="true">
+    <setup>Setup</setup>
+    <go>Begin</go>
+    <timeLimit steps="1250"/>
+    <metric>eco_level_pop</metric>
+    <enumeratedValueSet variable="humanos_grupo1">
+      <value value="750"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="humanos_grupo2">
+      <value value="200"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="humanos_grupo3">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="recyc_perc_g1">
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="recyc_perc_g2">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="recyc_perc_g3">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="learning_rate">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sociability_range_type">
+      <value value="&quot;Von Neumann&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sociability_max">
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="show_eco_level?">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="desplazamiento_max">
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="change_sociability_behavior?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="media_res">
+      <value value="0.95"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="desv_est_res">
+      <value value="0.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="media_campaign_frequency">
+      <value value="31"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="media_campaign_strength">
+      <value value="0.15"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="selected_campaign">
       <value value="&quot;All&quot;"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="media_res">
-      <value value="0.95"/>
+  </experiment>
+  <experiment name="experiment-main-None_by_sean" repetitions="10" runMetricsEveryStep="true">
+    <setup>Setup</setup>
+    <go>Begin</go>
+    <timeLimit steps="1250"/>
+    <metric>eco_level_pop</metric>
+    <enumeratedValueSet variable="humanos_grupo1">
+      <value value="750"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="desv_est_res">
-      <value value="0.3"/>
+    <enumeratedValueSet variable="humanos_grupo2">
+      <value value="200"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="media_campaign_strength">
-      <value value="0.15"/>
+    <enumeratedValueSet variable="humanos_grupo3">
+      <value value="50"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="recyc_perc_g1">
       <value value="20"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="change_sociability_behavior?">
-      <value value="false"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="recyc_perc_g2">
       <value value="30"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="media_campaign_frequency">
-      <value value="31"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="campaign_size">
-      <value value="20"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup</setup>
-    <go>go</go>
-    <metric>count turtles</metric>
-    <enumeratedValueSet variable="sociability_range_type">
-      <value value="&quot;Von Neumann&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="recyc_perc_g3">
       <value value="50"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="sociability_max">
-      <value value="4"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo1">
-      <value value="75"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo2">
-      <value value="20"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="learning_rate">
       <value value="3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="humanos_grupo3">
-      <value value="5"/>
+    <enumeratedValueSet variable="sociability_range_type">
+      <value value="&quot;Von Neumann&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sociability_max">
+      <value value="0.4"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="show_eco_level?">
       <value value="true"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="desplazamiento_max">
-      <value value="4"/>
+      <value value="0.4"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="selected_campaign">
-      <value value="&quot;None&quot;"/>
+    <enumeratedValueSet variable="change_sociability_behavior?">
+      <value value="false"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="media_res">
       <value value="0.95"/>
@@ -1756,23 +1690,14 @@ NetLogo 6.3.0
     <enumeratedValueSet variable="desv_est_res">
       <value value="0.3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="media_campaign_strength">
-      <value value="0.05"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="recyc_perc_g1">
-      <value value="20"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="change_sociability_behavior?">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="recyc_perc_g2">
-      <value value="30"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="media_campaign_frequency">
       <value value="31"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="campaign_size">
-      <value value="20"/>
+    <enumeratedValueSet variable="media_campaign_strength">
+      <value value="0.15"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="selected_campaign">
+      <value value="&quot;None&quot;"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
